@@ -31,6 +31,13 @@
 		18CCE12730AD871B009A285D /* Movie+release.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE12630AD871B009A285D /* Movie+release.swift */; };
 		18CCE12930AD8873009A285D /* TheaterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE12830AD8873009A285D /* TheaterModel.swift */; };
 		18CCE12B30AD889F009A285D /* TheaterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE12A30AD889F009A285D /* TheaterListView.swift */; };
+		18CCE12D30AD8FBA009A285D /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE12C30AD8FBA009A285D /* SignUpModel.swift */; };
+		18CCE12F30AD8FD7009A285D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE12E30AD8FD7009A285D /* SignUpViewModel.swift */; };
+		18CCE13130AD900C009A285D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE13030AD900C009A285D /* CustomTextField.swift */; };
+		18CCE13330AD9040009A285D /* LogivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE13230AD9040009A285D /* LogivView.swift */; };
+		18CCE13530AD9092009A285D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE13430AD9092009A285D /* SignUpView.swift */; };
+		18CCE13730AD9211009A285D /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE13630AD9211009A285D /* SideMenuView.swift */; };
+		18CCE13930AD92D5009A285D /* AuthScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCE13830AD92D5009A285D /* AuthScaffold.swift */; };
 		18EC3AE030AC84ED00991C1F /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3ADF30AC84EC00991C1F /* SplashView.swift */; };
 		18FA4C123099A54200EAABE0 /* Movie_ExplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FA4C113099A54200EAABE0 /* Movie_ExplorerApp.swift */; };
 		18FA4C143099A54200EAABE0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FA4C133099A54200EAABE0 /* MainView.swift */; };
@@ -66,6 +73,13 @@
 		18CCE12630AD871B009A285D /* Movie+release.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+release.swift"; sourceTree = "<group>"; };
 		18CCE12830AD8873009A285D /* TheaterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterModel.swift; sourceTree = "<group>"; };
 		18CCE12A30AD889F009A285D /* TheaterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterListView.swift; sourceTree = "<group>"; };
+		18CCE12C30AD8FBA009A285D /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		18CCE12E30AD8FD7009A285D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		18CCE13030AD900C009A285D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		18CCE13230AD9040009A285D /* LogivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogivView.swift; sourceTree = "<group>"; };
+		18CCE13430AD9092009A285D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		18CCE13630AD9211009A285D /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		18CCE13830AD92D5009A285D /* AuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScaffold.swift; sourceTree = "<group>"; };
 		18EC3ADF30AC84EC00991C1F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		18FA4C0E3099A54200EAABE0 /* Movie Explorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Explorer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FA4C113099A54200EAABE0 /* Movie_ExplorerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie_ExplorerApp.swift; sourceTree = "<group>"; };
@@ -92,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				1856228D30AC36F0004BA9C7 /* MovieModel.swift */,
+				18CCE12C30AD8FBA009A285D /* SignUpModel.swift */,
 				185622AE30AC71F9004BA9C7 /* BookingRecordModel.swift */,
 				1856229630AC3941004BA9C7 /* MovieResponse.swift */,
 				18CCE12830AD8873009A285D /* TheaterModel.swift */,
@@ -115,6 +130,9 @@
 				185622B430AC72AB004BA9C7 /* TicketCardView.swift */,
 				185622B630AC72DA004BA9C7 /* BookingHistoryView.swift */,
 				18CCE12A30AD889F009A285D /* TheaterListView.swift */,
+				18CCE13630AD9211009A285D /* SideMenuView.swift */,
+				18CCE13430AD9092009A285D /* SignUpView.swift */,
+				18CCE13230AD9040009A285D /* LogivView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -126,6 +144,7 @@
 				18CCE12630AD871B009A285D /* Movie+release.swift */,
 				185622A630AC48E0004BA9C7 /* FavouriteViewModel.swift */,
 				185622B030AC722B004BA9C7 /* BookingHistoryViewModel.swift */,
+				18CCE12E30AD8FD7009A285D /* SignUpViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -183,6 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				1856229A30AC3D49004BA9C7 /* CustomLoader.swift */,
+				18CCE13830AD92D5009A285D /* AuthScaffold.swift */,
+				18CCE13030AD900C009A285D /* CustomTextField.swift */,
 				185622B830AC773A004BA9C7 /* FavoritesToolbarButton.swift */,
 				185622AA30AC56E9004BA9C7 /* CustomButton.swift */,
 				185622AC30AC5766004BA9C7 /* CustomBackButton.swift */,
@@ -266,7 +287,9 @@
 				18CCE12730AD871B009A285D /* Movie+release.swift in Sources */,
 				18CCE12930AD8873009A285D /* TheaterModel.swift in Sources */,
 				18FA4C223099B23000EAABE0 /* SearchView.swift in Sources */,
+				18CCE13930AD92D5009A285D /* AuthScaffold.swift in Sources */,
 				1856229330AC379A004BA9C7 /* Networking.swift in Sources */,
+				18CCE13730AD9211009A285D /* SideMenuView.swift in Sources */,
 				185622AB30AC56E9004BA9C7 /* CustomButton.swift in Sources */,
 				185622B730AC72DA004BA9C7 /* BookingHistoryView.swift in Sources */,
 				185622B930AC773A004BA9C7 /* FavoritesToolbarButton.swift in Sources */,
@@ -277,17 +300,22 @@
 				185622A330AC3F81004BA9C7 /* BookingSummaryView.swift in Sources */,
 				1856229030AC36FC004BA9C7 /* MovieViewModel.swift in Sources */,
 				185622B130AC722B004BA9C7 /* BookingHistoryViewModel.swift in Sources */,
+				18CCE12D30AD8FBA009A285D /* SignUpModel.swift in Sources */,
 				185622B330AC7246004BA9C7 /* QRView.swift in Sources */,
+				18CCE12F30AD8FD7009A285D /* SignUpViewModel.swift in Sources */,
 				185622B530AC72AB004BA9C7 /* TicketCardView.swift in Sources */,
 				18FA4C243099B30E00EAABE0 /* FavouriteView.swift in Sources */,
 				18FA4C143099A54200EAABE0 /* MainView.swift in Sources */,
 				185622A130AC3F44004BA9C7 /* SeatSelectionView.swift in Sources */,
+				18CCE13130AD900C009A285D /* CustomTextField.swift in Sources */,
+				18CCE13330AD9040009A285D /* LogivView.swift in Sources */,
 				1856229D30AC3DCC004BA9C7 /* MovieDetailView.swift in Sources */,
 				1856229930AC3AC0004BA9C7 /* APIService.swift in Sources */,
 				1856229730AC3941004BA9C7 /* MovieResponse.swift in Sources */,
 				185622A930AC4CCC004BA9C7 /* CustomAlertView.swift in Sources */,
 				185622AF30AC71F9004BA9C7 /* BookingRecordModel.swift in Sources */,
 				185622A730AC48E0004BA9C7 /* FavouriteViewModel.swift in Sources */,
+				18CCE13530AD9092009A285D /* SignUpView.swift in Sources */,
 				18FA4C123099A54200EAABE0 /* Movie_ExplorerApp.swift in Sources */,
 				185622AD30AC5766004BA9C7 /* CustomBackButton.swift in Sources */,
 				1856229B30AC3D49004BA9C7 /* CustomLoader.swift in Sources */,

@@ -36,10 +36,15 @@ struct SplashView: View {
 
 struct RootView: View {
     @State private var showSplash = true
+    @StateObject private var auth = AuthViewModel()
 
     var body: some View {
         ZStack {
-            MainView()
+            if auth.isLoggedIn {
+                MainView()
+            } else {
+                LoginView()
+            }
 
             if showSplash {
                 SplashView()
@@ -47,6 +52,8 @@ struct RootView: View {
                     .zIndex(1)
             }
         }
+        .environmentObject(auth)
+        .animation(.easeInOut(duration: 0.3), value: auth.isLoggedIn)
         .task {
             try? await Task.sleep(nanoseconds: 2_000_000_000)
             withAnimation(.easeInOut(duration: 0.5)) {

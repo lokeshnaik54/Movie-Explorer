@@ -3,7 +3,7 @@ import SwiftUI
 struct HomeView: View {
 
     @StateObject private var viewModel = MovieViewModel()
-    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
+    @Environment(\.openMenu) private var openMenu
 
     let columns = [
         GridItem(.flexible()),
@@ -14,8 +14,6 @@ struct HomeView: View {
 
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-
-                favoritesStrip
 
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.movies) { movie in
@@ -52,14 +50,12 @@ struct HomeView: View {
                             }
                         }
                         .buttonStyle(.plain)
-                        // NEW: fires when this card appears; loads the next page if it's the last one
                         .task {
                             await viewModel.loadMoreIfNeeded(current: movie)
                         }
                     }
                 }
 
-                // NEW: bottom spinner while the next page loads
                 if viewModel.isLoadingMore {
                     ProgressView()
                         .frame(maxWidth: .infinity)
@@ -70,7 +66,17 @@ struct HomeView: View {
         }
         .navigationTitle("Popular Movies")
         .navigationBarBackButtonHidden(true)
-        .favoritesToolbarButton()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    openMenu()
+                } label: {
+                    Image(systemName: "line.3.horizontal")
+                        .font(.title3)
+                        .foregroundStyle(.purple)
+                }
+            }
+        }
         .overlay {
             if viewModel.isLoading {
                 CustomLoaderView()
@@ -82,7 +88,7 @@ struct HomeView: View {
             message: viewModel.errorMessage ?? "",
             primaryTitle: "Retry",
             primaryAction: {
-                Task { await viewModel.retry() }   // CHANGED: was fetchMovies()
+                Task { await viewModel.retry() }
             },
             secondaryTitle: "Cancel"
         )
@@ -90,62 +96,6 @@ struct HomeView: View {
             if viewModel.movies.isEmpty {
                 await viewModel.fetchMovies()
             }
-        }
-    }
-
-    // MARK: - Favorites strip
-
-    @ViewBuilder
-    private var favoritesStrip: some View {
-        if !favoriteViewModel.favoriteMovies.isEmpty {
-            VStack(alignment: .leading, spacing: 10) {
-
-                HStack {
-                    Text("Your Favorites")
-                        .font(.title3.bold())
-
-                    Spacer()
-
-                    NavigationLink("See All") {
-                        FavouriteView()
-                    }
-                    .font(.subheadline)
-                }
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 12) {
-                        ForEach(favoriteViewModel.favoriteMovies) { movie in
-                            NavigationLink {
-                                MovieDetailView(movie: movie)
-                            } label: {
-                                favoriteCard(movie)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private func favoriteCard(_ movie: Movie) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            AsyncImage(
-                url: movie.posterPath.flatMap {
-                    URL(string: "\(Networking.imageBaseURL)\($0)")
-                }
-            ) { image in
-                image.resizable().scaledToFill()
-            } placeholder: {
-                Rectangle().fill(Color.gray.opacity(0.2))
-            }
-            .frame(width: 110, height: 160)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-
-            Text(movie.title)
-                .font(.caption.bold())
-                .lineLimit(1)
-                .frame(width: 110, alignment: .leading)
         }
     }
 
@@ -161,7 +111,6 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             HomeView()
-                .environmentObject(FavoriteViewModel())
         }
     }
 }
