@@ -10,11 +10,11 @@ import SwiftUI
 struct BookingSummaryView: View {
 
     let movie: Movie
+    let theater: Theater
     let selectedSeats: [String]
     let selectedDate: String
     let selectedTime: String
 
-    private let seatPrice = 150
     private let convenienceFee = 30
 
     @State private var isProcessing = false
@@ -22,6 +22,9 @@ struct BookingSummaryView: View {
     @State private var showConfirmation = false
     @State private var savedBooking: BookingRecord?
     @EnvironmentObject var historyViewModel: BookingHistoryViewModel
+
+    private var seatPrice: Int { theater.seatPrice }
+
     private var ticketAmount: Int {
         selectedSeats.count * seatPrice
     }
@@ -70,15 +73,12 @@ struct BookingSummaryView: View {
             icon: "ticket.fill",
             iconColor: .purple,
             title: "Confirm Booking?",
-            message: "You are booking \(selectedSeats.count) seat(s) for ₹\(totalAmount).",
+            message: "You are booking \(selectedSeats.count) seat(s) at \(theater.name) for ₹\(totalAmount).",
             primaryTitle: "Confirm",
             primaryAction: { processBooking() },
             secondaryTitle: "Cancel"
         )
     }
-
- 
-        
 
     private func processBooking() {
         isProcessing = true
@@ -92,7 +92,8 @@ struct BookingSummaryView: View {
                 date: selectedDate,
                 time: selectedTime,
                 seats: selectedSeats,
-                totalAmount: totalAmount
+                totalAmount: totalAmount,
+                theaterName: theater.name
             )
 
             historyViewModel.add(booking)
@@ -101,7 +102,6 @@ struct BookingSummaryView: View {
             goToConfirmation = true
         }
     }
-    
 
     private var summaryCard: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -125,6 +125,7 @@ struct BookingSummaryView: View {
 
     private var showDetails: some View {
         VStack(alignment: .leading, spacing: 15) {
+            summaryRow("Theater", value: theater.name)
             summaryRow("Date", value: selectedDate)
             summaryRow("Show Time", value: selectedTime)
             summaryRow("Seats", value: seatsText)
@@ -152,23 +153,11 @@ struct BookingSummaryView: View {
         }
     }
 
-
     @ViewBuilder
     private var confirmationDestination: some View {
         if let savedBooking {
             BookingConfirmationView(booking: savedBooking)
         }
-    }
-
-    private var confirmLabel: some View {
-        
-        Text("Confirm Booking - ₹\(totalAmount)")
-            .font(.headline)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.purple)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     // MARK: - Helpers
@@ -182,6 +171,7 @@ struct BookingSummaryView: View {
 
             Text(value)
                 .fontWeight(.medium)
+                .multilineTextAlignment(.trailing)
         }
     }
 }
@@ -198,10 +188,14 @@ struct BookingSummaryView_Previews: PreviewProvider {
                     voteAverage: 8.8,
                     releaseDate: "2010-07-16"
                 ),
+                theater: TheaterData.all[0],
                 selectedSeats: ["A1", "A2"],
-                selectedDate: "17 Nov 2026",
+                selectedDate: "18 Nov",
                 selectedTime: "7:30 PM"
             )
+            .environmentObject(BookingHistoryViewModel())
         }
     }
 }
+
+

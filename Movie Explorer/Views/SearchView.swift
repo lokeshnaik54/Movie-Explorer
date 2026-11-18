@@ -31,6 +31,11 @@ struct SearchView: View {
         && viewModel.searchResults.isEmpty
     }
 
+    // NEW
+    private var isLoadingMore: Bool {
+        isSearchingMode ? viewModel.isSearchingMore : viewModel.isLoadingMore
+    }
+
     // MARK: - Body
 
     var body: some View {
@@ -118,6 +123,13 @@ struct SearchView: View {
                 VStack(alignment: .leading, spacing: 14) {
                     sectionHeader
                     grid
+
+                    // NEW: bottom spinner
+                    if isLoadingMore {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
@@ -145,6 +157,13 @@ struct SearchView: View {
                     movieCard(movie)
                 }
                 .buttonStyle(.plain)
+                .task {
+                    if isSearchingMode {
+                        await viewModel.loadMoreSearchIfNeeded(current: movie)
+                    } else {
+                        await viewModel.loadMoreIfNeeded(current: movie)
+                    }
+                }
             }
         }
     }

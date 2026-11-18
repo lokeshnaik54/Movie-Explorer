@@ -11,6 +11,7 @@ import SwiftUI
 struct SeatSelectionView: View {
 
     let movie: Movie
+    let theater: Theater
     let selectedDate: String
     let selectedTime: String
 
@@ -19,18 +20,37 @@ struct SeatSelectionView: View {
     private let rows = ["A", "B", "C", "D", "E"]
     private let seatNumbers = 1...6
 
-    private let bookedSeats: Set<String> = [
-        "A2", "A3", "B4", "C1", "D5"
-    ]
+    // Stable "random" booked seats per theater + date + time
+    private var bookedSeats: Set<String> {
+        var n = (theater.id + selectedDate + selectedTime)
+            .unicodeScalars
+            .reduce(0) { $0 + Int($1.value) }
 
-    private let seatPrice = 150
+        var result = Set<String>()
+        while result.count < 6 {
+            n = (n * 31 + 7) % 1000
+            let row = rows[n % rows.count]
+            let number = (n / 7) % 6 + 1
+            result.insert("\(row)\(number)")
+        }
+        return result
+    }
+
+    private var seatPrice: Int { theater.seatPrice }
 
     var body: some View {
 
         VStack(spacing: 25) {
 
-            Text(movie.title)
-                .font(.title2.bold())
+            VStack(spacing: 6) {
+                Text(movie.title)
+                    .font(.title2.bold())
+
+                Text("\(theater.name) • \(selectedDate) • \(selectedTime)")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
 
             Text("SCREEN")
                 .font(.caption.bold())
@@ -39,6 +59,8 @@ struct SeatSelectionView: View {
                 .padding()
                 .background(Color.gray.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
+            let booked = bookedSeats
 
             VStack(spacing: 15) {
 
@@ -55,7 +77,7 @@ struct SeatSelectionView: View {
 
                             Button {
 
-                                if !bookedSeats.contains(seat) {
+                                if !booked.contains(seat) {
 
                                     if selectedSeats.contains(seat) {
                                         selectedSeats.remove(seat)
@@ -69,13 +91,13 @@ struct SeatSelectionView: View {
                                 Text("\(number)")
                                     .font(.caption.bold())
                                     .frame(width: 35, height: 35)
-                                    .background(seatColor(seat))
+                                    .background(seatColor(seat, booked: booked))
                                     .foregroundStyle(.white)
                                     .clipShape(
                                         RoundedRectangle(cornerRadius: 8)
                                     )
                             }
-                            .disabled(bookedSeats.contains(seat))
+                            .disabled(booked.contains(seat))
                         }
                     }
                 }
@@ -117,9 +139,11 @@ struct SeatSelectionView: View {
                         .font(.title3.bold())
                 }
             }
-            CustomBtn(title: "Continue", isEnabled: !selectedSeats.isEmpty,destination: {
+
+            CustomBtn(title: "Continue", isEnabled: !selectedSeats.isEmpty, destination: {
                 BookingSummaryView(
                     movie: movie,
+                    theater: theater,
                     selectedSeats: Array(selectedSeats).sorted(),
                     selectedDate: selectedDate,
                     selectedTime: selectedTime
@@ -132,9 +156,9 @@ struct SeatSelectionView: View {
         .customBackButton()
     }
 
-    private func seatColor(_ seat: String) -> Color {
+    private func seatColor(_ seat: String, booked: Set<String>) -> Color {
 
-        if bookedSeats.contains(seat) {
+        if booked.contains(seat) {
             return .gray
         }
 
@@ -158,17 +182,25 @@ struct SeatSelectionView: View {
     }
 }
 
-
-
 struct SeatSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        SeatSelectionView(movie: Movie(
-            id: 1,
-            title: "Inception",
-            overview: "A science fiction movie about dreams.",
-            posterPath: nil,
-            voteAverage: 8.8,
-            releaseDate: "2010-07-16"
-        ), selectedDate: "", selectedTime: "")
+        NavigationStack {
+            SeatSelectionView(
+                movie: Movie(
+                    id: 1,
+                    title: "Inception",
+                    overview: "A science fiction movie about dreams.",
+                    posterPath: nil,
+                    voteAverage: 8.8,
+                    releaseDate: "2010-07-16"
+                ),
+                theater: TheaterData.all[0],
+                selectedDate: "18 Nov",
+                selectedTime: "7:30 PM"
+            )
+        }
     }
 }
+
+
+

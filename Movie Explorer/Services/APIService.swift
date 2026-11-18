@@ -6,23 +6,23 @@ class APIService {
 
     private init() { }
 
-    func fetchPopularMovies() async throws -> MovieResponse {
+    func fetchPopularMovies(page: Int = 1) async throws -> MovieResponse {
         try await request(
             path: "/movie/popular",
             queryItems: [
                 URLQueryItem(name: "language", value: "en-US"),
-                URLQueryItem(name: "page", value: "1")
+                URLQueryItem(name: "page", value: String(page))
             ]
         )
     }
 
-    func searchMovies(query: String) async throws -> MovieResponse {
+    func searchMovies(query: String, page: Int = 1) async throws -> MovieResponse {
         try await request(
             path: "/search/movie",
             queryItems: [
                 URLQueryItem(name: "query", value: query),
                 URLQueryItem(name: "language", value: "en-US"),
-                URLQueryItem(name: "page", value: "1")
+                URLQueryItem(name: "page", value: String(page))
             ]
         )
     }

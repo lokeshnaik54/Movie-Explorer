@@ -52,7 +52,18 @@ struct HomeView: View {
                             }
                         }
                         .buttonStyle(.plain)
+                        // NEW: fires when this card appears; loads the next page if it's the last one
+                        .task {
+                            await viewModel.loadMoreIfNeeded(current: movie)
+                        }
                     }
+                }
+
+                // NEW: bottom spinner while the next page loads
+                if viewModel.isLoadingMore {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
                 }
             }
             .padding()
@@ -71,7 +82,7 @@ struct HomeView: View {
             message: viewModel.errorMessage ?? "",
             primaryTitle: "Retry",
             primaryAction: {
-                Task { await viewModel.fetchMovies() }
+                Task { await viewModel.retry() }   // CHANGED: was fetchMovies()
             },
             secondaryTitle: "Cancel"
         )

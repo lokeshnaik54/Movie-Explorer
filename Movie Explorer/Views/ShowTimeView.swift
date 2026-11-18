@@ -12,6 +12,7 @@ import SwiftUI
 struct ShowTimeView: View {
 
     let movie: Movie
+    let theater: Theater
 
     @State private var selectedDate = 0
     @State private var selectedTime: String? = nil
@@ -115,7 +116,7 @@ struct ShowTimeView: View {
 
             CustomBtn(title: "Select Seats", isEnabled: selectedTime != nil) {
                 SeatSelectionView(
-                    movie: movie,
+                    movie: movie, theater:theater ,
                     selectedDate: dates[selectedDate],
                     selectedTime: selectedTime ?? ""
                 )
@@ -133,13 +134,18 @@ struct ShowTimeView: View {
 
 struct ShowTimeView_Previews: PreviewProvider {
     static var previews: some View {
-        ShowTimeView(movie: Movie(
-            id: 1,
-            title: "Inception",
-            overview: "A science fiction movie about dreams.",
-            posterPath: nil,
-            voteAverage: 8.8,
-            releaseDate: "2010-07-16"
-        ))
+        NavigationStack {
+            ShowTimeView(
+                movie: Movie(
+                    id: 1,
+                    title: "Inception",
+                    overview: "A science fiction movie about dreams.",
+                    posterPath: nil,
+                    voteAverage: 8.8,
+                    releaseDate: "2010-07-16"
+                ),
+                theater: TheaterData.all[0]
+            )
+        }
     }
 }

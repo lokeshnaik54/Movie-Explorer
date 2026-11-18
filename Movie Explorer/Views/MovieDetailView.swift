@@ -80,12 +80,21 @@ struct MovieDetailView: View {
                         .font(.body)
                         .foregroundStyle(.secondary)
                     
-
-                    
-                    CustomBtn(title: "Book Tickets", destination: {
-                        ShowTimeView(movie: movie)
-                    })
-                    .padding(.top, 15)
+                    // CHANGED: booking only for released movies
+                    if movie.isReleased {
+                        CustomBtn(title: "Book Tickets", destination: {
+                            TheaterListView(movie: movie)     
+                        })
+                        .padding(.top, 15)
+                    } else {
+                        Label("Releases on \(movie.releaseDateText)", systemImage: "calendar")
+                            .font(.subheadline.bold())
+                            .foregroundStyle(.purple)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.purple.opacity(0.1), in: Capsule())
+                            .padding(.top, 15)
+                    }
                 }
                 .padding(.horizontal)
 
@@ -106,8 +115,6 @@ struct MovieDetailView: View {
     }
 }
 
-
-
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
         MovieDetailView(movie: Movie(
@@ -118,5 +125,7 @@ struct MovieDetailView_Previews: PreviewProvider {
             voteAverage: 8.8,
             releaseDate: "2010-07-16"
         ))
+        .environmentObject(FavoriteViewModel())
     }
 }
+

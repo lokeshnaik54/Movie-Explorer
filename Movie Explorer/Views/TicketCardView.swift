@@ -36,6 +36,9 @@ struct TicketCardView: View {
     private var detailRows: some View {
         VStack(alignment: .leading, spacing: 18) {
             row("Booking ID", booking.id)
+            if let theater = booking.theaterName {      // NEW
+                row("Theater", theater)
+            }
             row("Date", booking.date)
             row("Show Time", booking.time)
             row("Seats", booking.seats.joined(separator: ", "))

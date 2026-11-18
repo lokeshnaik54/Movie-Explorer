@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Lets any screen inside the app jump back to the Home tab
+
 private struct GoHomeKey: EnvironmentKey {
     static let defaultValue: () -> Void = { }
 }
